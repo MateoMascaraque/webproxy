@@ -54,7 +54,7 @@ static int send_all(int socket_descriptor, const char *buff, size_t len) {
 
 
 // find_header_end()
-// look for "\r\n\r\n", cant look as a string [why?]
+// look for "\r\n\r\n", cant look as a string
 static size_t find_header_end(const char *buff, size_t len) {
   for (size_t i = 0; i + 3 < len; i++) {
     if (buff[i] == '\r' && buff[i + 1] == '\n' &&
@@ -316,14 +316,14 @@ static void handle_client(int client_descriptor) {
 // reap_children()
 // ends subprocesses
 static void reap_children(int sig) {
-  (void)sig; // not used, avoids the unused parameter warning
-  int saved_errno = errno; // waitpid can change errno under the code we interrupted
+  (void)s;
+  int aux = errno; // waitpid apparently COULD change the error
 
   while (waitpid(-1, NULL, WNOHANG) > 0) {
-    // the reapingg happens in the condition, repear until no children
+    // the reaping happens in the condition, repear until no children
   }
 
-  errno = saved_errno;
+  errno = aux;
 }
 
 
