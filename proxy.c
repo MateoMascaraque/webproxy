@@ -333,7 +333,6 @@ int proxy(char *proxy_port) {
   // CHILDREN CLEANUP //
   // call reap_children every time a child ends
   struct sigaction sa;
-  memset(&sa, 0, sizeof sa);
   sa.sa_handler = reap_children;
   sigemptyset(&sa.sa_mask);
   sa.sa_flags = SA_RESTART; // so accept() keeps going after the handler
