@@ -111,15 +111,13 @@ static int is_other_method(const char *method) {
 }
 
 
-/* remove_header()
- * Header names don't care about upper/lower case ("Connection" == "connection"),
- * but ParsedHeader_remove() compares with strcmp. So I go through the headers
- * myself, compare with strcasecmp, and remove every match.
-*/
+// remove_header()
+// made case insensnitive (strcasecmp)
+
 static void remove_header(struct ParsedRequest *req, const char *name) {
   for (size_t i = 0; i < req->headersused; i++) {
     struct ParsedHeader *header = req->headers + i;
-    // removed headers have key == NULL, skip them
+    // skip removed headers
     if (header->key != NULL && strcasecmp(header->key, name) == 0) {
       ParsedHeader_remove(req, header->key);
     }
