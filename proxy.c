@@ -84,8 +84,8 @@ static int read_request(int client_descriptor, char *buff, size_t buff_size) {
       return 0; // client closed or error
     }
 
-    // "\r\n\r\n" could be cut between two recv() calls,
-    // so start looking 3 bytes before the new data
+    // "\r\n\r\n" CAN be separated in two recv()
+    // I have to check the previous 3 (if it were 4 the whole end would be there)
     size_t start = 0;
     if (used >= 3) {
       start = used - 3;
